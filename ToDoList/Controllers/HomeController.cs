@@ -49,27 +49,39 @@ namespace ToDoList.Controllers
             return View(model);
         }
 
+        // TODO:    In the Add() action method that doesn't accept
+        //          any arguments, add a statement that creates a
+        //          ToDoViewModel object;
         public IActionResult Add()
         {
-            ViewBag.Categories = context.Categories.ToList();
-            ViewBag.Statuses = context.Statuses.ToList();
-            return View();
+            ToDoViewModel model = new ToDoViewModel();
+            // TODO:    Modify the code that stores data in the viewbag so it stores that same
+            //          data in the ToDoViewModel object
+            model.Categories = context.Categories.ToList();
+            model.Statuses = context.Statuses.ToList();
+            // TODO:    Modify return statement so that it passes the view model to the view
+            return View(model);
         }
 
+        // TODO:  Change the paramater to use the ToDoViewModel model
         [HttpPost]
-        public IActionResult Add(ToDo task)
+        public IActionResult Add(ToDoViewModel model)
         {
             if (ModelState.IsValid)
             {
-                context.ToDos.Add(task);
+                // TODO:    Modify the code to use the model.CurrentTask
+                context.ToDos.Add(model.CurrentTask);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
             else
             {
-                ViewBag.Categories = context.Categories.ToList();
-                ViewBag.Statuses = context.Statuses.ToList();
-                return View(task);
+                // TODO:    In the else block, modify the code that stores data in the ViewBag so it stores
+                //          data in the view model parameter
+                model.Categories = context.Categories.ToList();
+                model.Statuses = context.Statuses.ToList();
+                // TODO:    Pass the model to the return statement
+                return View(model);
             }
         }
 
